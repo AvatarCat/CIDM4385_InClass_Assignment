@@ -1,9 +1,19 @@
-var body = document.getElementById('body');
+class AppComponent extends React.Component
+{
+    // constructor
+    constructor(props){
+        super(props);
+    }
 
-const App = () => {
-    return React.createElement('div', {}, [
-        React.createElement(Email, {})
-    ]);
-};
+    render() {
+        return (
+            <div className ="container">
+                <EmailInput />
+                <PasswordInput />
+            </div>
+        );
+    };
+}
 
-ReactDOM.render(React.createElement(App), body);
+var root = document.getElementById('root');
+ReactDOM.render(<AppComponent />, root);
