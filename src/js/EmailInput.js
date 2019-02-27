@@ -1,44 +1,45 @@
-class EmailInput extends React.Component 
-{
-    
+class EmailInput extends React.Component {
+
     //constructor
-    constructor(props) {
+    constructor(props){
         super(props);
-        
-        this.state = {customer_email: ''};
 
-        this.handleEmailChange = this.handleEmailChange.bind(this);        
-        this.handleEmailSubmit = this.handleEmailSubmit.bind(this);
-    };
+        //event handlers
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handleOnFocus = this.handleOnFocus.bind(this);
 
-    handleEmailChange(event){
-        const customer_email = event.target.value;
-        this.setState( () => {
-                return {
-                    customer_email
-                }
-            }
-        );
     }
 
-    //button clicked
-    handleEmailSubmit(event){
+    /* this event handler simply "lifts" state to the parent component */
+    handleEmailChange(event){
+        const email = event.target.value;
+        this.props.onEmailChange(email);
+    }
 
-        this.props.handleOrderSubmit(this.state.customer_email);
+    handleOnFocus(event){
+        event.target.valid = true;
+        this.props.onEmailFocus();
     }
 
     render() {
+
+        const email = this.props.email;
+
         return (
-            <div className="input-group mb-3">
-                <input 
-                    className="form-control"            
-                    id="emailInput"
-                    onChange={this.handleEmailChange}
-                    placeholder="Email Address"
-                    type="text"
-                    value={this.state.customer_email} m
-                />
-            </div>  
+            <div className="form-group">
+                <label htmlFor="exampleInputPassword1">Email</label>
+                <input className={this.props.emailInputValidationClass} 
+                       id="emailInput" 
+                       onChange={this.handleEmailChange}
+                       onFocus={this.handleOnFocus}
+                       placeholder="Your email address" 
+                       type="input"
+                       value={email}  
+                       required />
+                <div className="invalid-feedback">
+                    {this.props.emailErrorMessage}
+                </div>          
+            </div>
         );
-    }
+    };
 }

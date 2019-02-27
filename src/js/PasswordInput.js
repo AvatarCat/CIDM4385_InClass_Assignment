@@ -3,44 +3,36 @@ class PasswordInput extends React.Component {
     //constructor
     constructor(props){
         super(props);
-        this.state = {delivery_password: ''}; 
+        //this.state = {password: ''}; 
 
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
 
     }
 
+    /* this event handler simply "lifts" state to the parent component */
     handlePasswordChange(event){
-        const delivery_password = event.target.value;
-        this.setState( () => {
-                return {
-                    delivery_password
-                }
-            }
-        );
-
-        const password = this.state.delivery_password;
-
-        this.props.handlePassword(password);
-    }    
+        const password = event.target.value;
+        this.props.onPasswordChange(password);
+    }
 
     render() {
+
+        const password = this.props.password;
+
         return (
             <div className="form-group">
-                <input className="form-control" 
-                       id="zipcodeInput" 
-                       onChange={this.handlePasswordChange}                       
-                       placeholder="Password" 
-                       type="input"
-                       value={this.state.delivery_password}  />
-
-                <div className="input-group-append">
-                    <button className="btn btn-primary" 
-                            id="button-addon2"
-                            onClick={this.handleEmailSubmit}>
-                        Submit
-                    </button>
-                </div>
-            </div>
+                <label htmlFor="exampleInputPassword1">Password</label>
+                <input className={this.props.passwordInputValidationClass}  
+                       id="exampleInputPassword1" 
+                       onChange={this.handlePasswordChange}                                              
+                       placeholder="Your password"
+                       type="password"
+                       value={password} 
+                       required />
+                <div className="invalid-feedback">
+                    {this.props.passwordErrorMessage}
+                </div>                         
+            </div>            
         );
     };
 }
